@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>History of Jazz — listening quiz</title>
+  <link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <p class="course">History of Jazz</p>
+      <h1 id="exam-title">Listening quiz</h1>
+      <p class="rules">10 excerpts · 15 choices · 2 points each · 20 points</p>
+    </header>
+
+    <section id="start-screen" class="panel">
+      <p>
+        Each question plays a random 60-second excerpt (start anywhere from 0:00 to
+        one minute before the end). Match it to the song title or the billed artist.
+        Shared artists count for every matching excerpt. Letters A–O are this round’s
+        15 sampled choices, not a fixed answer key.
+      </p>
+      <p id="pool-note" class="muted"></p>
+      <div id="exam-buttons" class="actions"></div>
+      <div id="study-buttons" class="actions"></div>
+      <p class="keys">Quiz: A–O answer · space play · R replay · N new excerpt · ← → move</p>
+      <p class="keys">Study: space play · S show/hide · N next track · ← → prev/next</p>
+    </section>
+
+    <audio id="player" preload="auto" class="visually-hidden"></audio>
+
+    <section id="quiz-screen" class="panel hidden">
+      <div class="status">
+        <p id="progress-label">Excerpt 1 of 10</p>
+        <ol id="dots" class="dots" aria-hidden="true"></ol>
+      </div>
+
+      <div class="player">
+        <div class="transport">
+          <button type="button" id="play-btn" class="play">Play excerpt</button>
+          <button type="button" id="replay-btn" class="ghost">Replay</button>
+          <button type="button" id="new-excerpt-btn" class="ghost">New excerpt</button>
+        </div>
+        <div class="meter" aria-hidden="true">
+          <div id="meter-fill" class="meter-fill"></div>
+        </div>
+        <p id="time-label" class="time">Ready</p>
+      </div>
+
+      <fieldset class="choices">
+        <legend class="visually-hidden">Answer choices</legend>
+        <div id="choice-list"></div>
+      </fieldset>
+
+      <div class="nav">
+        <button type="button" id="prev-btn" class="ghost">Previous</button>
+        <button type="button" id="next-btn" class="ghost">Next</button>
+        <button type="button" id="submit-btn" class="play">Grade quiz</button>
+      </div>
+    </section>
+
+    <section id="study-screen" class="panel hidden">
+      <div class="status">
+        <p id="study-progress-label">Track 1 of 23</p>
+      </div>
+
+      <div class="player">
+        <div class="transport">
+          <button type="button" id="study-play-btn" class="play">Play</button>
+          <button type="button" id="study-restart-btn" class="ghost">Restart</button>
+          <button type="button" id="study-next-btn" class="ghost">Next track</button>
+        </div>
+        <div class="meter" aria-hidden="true">
+          <div id="study-meter-fill" class="meter-fill"></div>
+        </div>
+        <p id="study-time-label" class="time">Ready</p>
+      </div>
+
+      <div id="study-prompt" class="study-prompt">
+        <p>Listen first, then reveal when you are ready.</p>
+      </div>
+
+      <button type="button" id="study-reveal-btn" class="play study-reveal">Show answer</button>
+
+      <div id="study-card" class="study-card hidden">
+        <p class="study-label">Title</p>
+        <p id="study-title" class="study-title"></p>
+        <p class="study-label">Artist</p>
+        <p id="study-artist" class="study-artist"></p>
+      </div>
+
+      <div class="nav">
+        <button type="button" id="study-prev-btn" class="ghost">Previous</button>
+        <button type="button" id="study-home-btn" class="ghost">Back to start</button>
+        <button type="button" id="study-shuffle-btn" class="ghost">Reshuffle deck</button>
+      </div>
+    </section>
+
+    <section id="result-screen" class="panel hidden">
+      <p id="score-line" class="score"></p>
+      <p id="score-sub" class="muted"></p>
+      <ol id="review-list" class="review"></ol>
+      <div class="actions">
+        <button type="button" id="retake-btn" class="play">Shuffle and retake</button>
+        <button type="button" id="home-btn" class="ghost">Back to start</button>
+      </div>
+    </section>
+  </main>
+  <script src="app.js?v=5"></script>
+</body>
+</html>

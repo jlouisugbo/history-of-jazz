@@ -1,0 +1,153 @@
+{
+  "questionCount": 10,
+  "choiceCount": 15,
+  "pointsPerQuestion": 2,
+  "excerptSeconds": 60,
+  "exams": [
+    {
+      "id": "exam1",
+      "title": "Exam 1",
+      "audioDir": "/exam1",
+      "tracks": [
+        {
+          "id": "exam1-01",
+          "file": "01. Hoe, Emma, Hoe.mp3",
+          "title": "Hoe, Emma, Hoe",
+          "artist": "Larry Earl Jr., Christina Lane, and Willie Wright"
+        },
+        {
+          "id": "exam1-02",
+          "file": "02. Soon One Morning.mp3",
+          "title": "Soon One Morning",
+          "artist": "Mississippi Fred McDowell"
+        },
+        {
+          "id": "exam1-03",
+          "file": "03. Back Water Blues.mp3",
+          "title": "Back Water Blues",
+          "artist": "Bessie Smith"
+        },
+        {
+          "id": "exam1-04",
+          "file": "04. Reckless Blues.mp3",
+          "title": "Reckless Blues",
+          "artist": "Bessie Smith"
+        },
+        {
+          "id": "exam1-05",
+          "file": "05. West End Blues.mp3",
+          "title": "West End Blues",
+          "artist": "Louis Armstrong"
+        },
+        {
+          "id": "exam1-06",
+          "file": "06. Red Onion Jazz Babies - Cake Walking Babies From Home.mp3",
+          "title": "Cake Walking Babies From Home",
+          "artist": "Red Onion Jazz Babies"
+        },
+        {
+          "id": "exam1-07",
+          "file": "07. ODJB - Dixie Jazz Band One-Step.mp3",
+          "title": "Dixie Jazz Band One-Step",
+          "artist": "Original Dixieland Jazz Band"
+        },
+        {
+          "id": "exam1-08",
+          "file": "08. King Oliver and His Creole Jazz Band - Snake Rag.mp3",
+          "title": "Snake Rag",
+          "artist": "King Oliver"
+        },
+        {
+          "id": "exam1-09",
+          "file": "09. Fletcher Henderson - Copenhagen.mp3",
+          "title": "Copenhagen",
+          "artist": "Fletcher Henderson"
+        },
+        {
+          "id": "exam1-10",
+          "file": "10. Jelly Roll Morton's Hot Peppers – Dead Man Blues.mp3",
+          "title": "Dead Man Blues",
+          "artist": "Jelly Roll Morton"
+        },
+        {
+          "id": "exam1-11",
+          "file": "11. Louis Armstrong and His Hot Five - Hotter Than That.mp3",
+          "title": "Hotter Than That",
+          "artist": "Louis Armstrong"
+        },
+        {
+          "id": "exam1-12",
+          "file": "12. Duke Ellington – East St. Louis Toodle-oo.mp3",
+          "title": "East St. Louis Toodle-Oo",
+          "artist": "Duke Ellington"
+        },
+        {
+          "id": "exam1-13",
+          "file": "13. Frankie Trumbauer And His Orchestra - Singin' The Blues.mp3",
+          "title": "Singin' the Blues",
+          "artist": "Frankie Trumbauer"
+        },
+        {
+          "id": "exam1-14",
+          "file": "14. Paul Whiteman - Changes.mp3",
+          "title": "Changes",
+          "artist": "Paul Whiteman"
+        },
+        {
+          "id": "exam1-15",
+          "file": "15. Duke Ellington and His Orchestra - Black and Tan Fantasy.mp3",
+          "title": "Black and Tan Fantasy",
+          "artist": "Duke Ellington"
+        },
+        {
+          "id": "exam1-16",
+          "file": "16. James P. Johnson - You've Got To Be Modernistic.mp3",
+          "title": "You've Got to Be Modernistic",
+          "artist": "James P. Johnson"
+        },
+        {
+          "id": "exam1-17",
+          "file": "17. Duke Ellington and His Orchestra - Mood Indigo.mp3",
+          "title": "Mood Indigo",
+          "artist": "Duke Ellington"
+        },
+        {
+          "id": "exam1-18",
+          "file": "18. Fletcher Henderson and His Orchestra - Blue Lou.mp3",
+          "title": "Blue Lou",
+          "artist": "Fletcher Henderson"
+        },
+        {
+          "id": "exam1-19",
+          "file": "19. Benny Goodman Quartet - Dinah.mp3",
+          "title": "Dinah",
+          "artist": "Benny Goodman"
+        },
+        {
+          "id": "exam1-20",
+          "file": "20. Andy Kirk and His Twelve Clouds of Joy - Walkin' and swingin'.mp3",
+          "title": "Walkin' and Swingin'",
+          "artist": "Andy Kirk"
+        },
+        {
+          "id": "exam1-21",
+          "file": "21. Count Basie and His Orchestra - O'Clock Jump.mp3",
+          "title": "One O'Clock Jump",
+          "artist": "Count Basie"
+        },
+        {
+          "id": "exam1-22",
+          "file": "22. Coleman Hawkins - Body and Soul.mp3",
+          "title": "Body and Soul",
+          "artist": "Coleman Hawkins"
+        },
+        {
+          "id": "exam1-23",
+          "file": "23. Count Basie's Kansas City Seven - Lester Leaps In.mp3",
+          "title": "Lester Leaps In",
+          "artist": "Count Basie"
+        }
+      ]
+    }
+  ]
+}
