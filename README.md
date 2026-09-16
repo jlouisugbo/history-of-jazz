@@ -1,71 +1,61 @@
 # History of Jazz listening quiz
 
-Local quiz + study mode. No cloud, no npm build.
+Local quiz + study mode, or **host online** so classmates just open a link (no download, no Smart App Control issues).
 
-## Quick start (no Python needed)
+## Host online (recommended for sharing)
 
-### Mac
+**Both GitHub Pages and Vercel are free** and easily handle 50+ classmates. Audio is static files; there is no server to scale.
 
-1. Download/unzip the folder (must include `jazz-quiz`, `quiz/`, `exam1/`).
-2. Double-click **`start.command`** (or run `./jazz-quiz` in Terminal).
-3. Browser opens automatically. Leave the window open; **Ctrl+C** to stop.
+| | GitHub Pages | Vercel |
+|---|-------------|--------|
+| Cost | Free | Free |
+| Bandwidth | ~soft 100 GB/month | 100 GB/month (Hobby) |
+| Best if | Repo is already on GitHub | You want auto-deploy on every push |
+| Your URL | `https://jlouisugbo.github.io/history-of-jazz/quiz/` | `https://your-project.vercel.app/quiz/` |
 
-First time on Mac without the binary: run `./build.sh` once (requires [Go](https://go.dev/dl/)), then use `start.command`.
+50 people listening to ~3 min tracks a few times each is well under either limit.
 
-### Windows
+### Option A — GitHub Pages (simplest)
 
-1. **Before unzipping:** right-click the zip → **Properties** → check **Unblock** → OK.
-2. Unzip the folder (needs `quiz/`, `exam1/`, and `start.bat`).
-3. Double-click **`start.bat`**. Browser opens automatically. **Ctrl+C** to stop.
+Repo: [github.com/jlouisugbo/history-of-jazz](https://github.com/jlouisugbo/history-of-jazz)
 
-**Smart App Control blocked it?** Windows 11 often blocks unsigned `.exe` files from the internet — even safe local apps like this one. That is normal; the app is not malware.
+1. Push this folder to `main` (including `exam1/` MP3s).
+2. On GitHub: **Settings → Pages**
+3. **Build and deployment → Source:** Deploy from a branch
+4. **Branch:** `main` → folder **`/ (root)`** → Save
+5. Wait ~1–2 minutes. Open:
 
-Pick one fix:
+   **https://jlouisugbo.github.io/history-of-jazz/quiz/**
 
-| Fix | What to do |
-|-----|------------|
-| **Easiest** | Install [Python 3](https://www.python.org/downloads/) (check **Add python.exe to PATH**). Run **`start.bat`** again — it uses Python automatically. Or use **`start-python.bat`**. |
-| **One-time Windows setting** | Settings → Privacy & security → Windows Security → App & browser control → **Smart App Control settings** → set to **Evaluation mode** (or Off). Run `start.bat` again. |
-| **Build locally** | Install [Go](https://go.dev/dl/), run `go build -o jazz-quiz.exe .` in this folder, then `start.bat`. |
+Send that link to your friend. Nothing to install.
 
-There is no free way to make a custom `.exe` look “signed” to Smart App Control without buying a [code signing certificate](https://learn.microsoft.com/en-us/windows/win32/seccrypto/cryptography-tools) (~$200+/year). For a class zip, **Python launcher** or **Evaluation mode** is the practical path.
+### Option B — Vercel
 
-Quiz URL: http://127.0.0.1:8765/quiz/
+1. Push to GitHub (same repo).
+2. Go to [vercel.com](https://vercel.com) → **Add New Project** → import `history-of-jazz`.
+3. Leave defaults (static site) → **Deploy**.
+4. Open `https://<project>.vercel.app/quiz/` (root redirects to `/quiz/`).
 
-## Build the standalone binary
+---
 
-From this folder (one-time, needs Go installed):
-
-```bash
-./build.sh
-```
-
-Creates:
-- **`jazz-quiz`** — Mac/Linux (current machine)
-- **`jazz-quiz.exe`** — Windows (cross-compiled from Mac/Linux)
-
-To ship to classmates, zip the folder with the binary + `quiz/` + `exam1/` + `start.command` / `start.bat`. They do **not** need Python or Go.
-
-Typical size: ~6–8 MB per binary.
-
-## Python fallback
-
-If you prefer not to build Go:
+## Run locally (optional)
 
 ```bash
 python3 serve.py
+# or
+./jazz-quiz
 ```
 
-Same URL. Requires Python 3.
+Open http://127.0.0.1:8765/quiz/
 
 ## Modes
 
 **Quiz** — 10 random 60-second excerpts, 15 choices. Match by **title or artist** (2 pts each).
 
-**Study** — full tracks in random order. Listen, then **Show answer**. Keys: space play, S reveal, N next.
+**Study** — full tracks in random order. **Show answer** when ready. Keys: space play, S reveal, N next.
 
-## Add exam 2 later
+## Add exam 2
 
 1. Drop MP3s in `exam2/`.
 2. Copy the `exam1` block in `quiz/catalog.json`; set `id`, `title`, `audioDir` to `/exam2`.
-3. Add `tracks` with `file`, `title`, and `artist`.
+3. Add tracks with `file`, `title`, `artist`. Push — hosting updates automatically.

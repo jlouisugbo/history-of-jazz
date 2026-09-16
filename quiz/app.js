@@ -76,9 +76,17 @@ function sample(items, count) {
   return shuffle(items).slice(0, Math.min(count, items.length));
 }
 
+function repoBase() {
+  const path = window.location.pathname;
+  const quizAt = path.indexOf("/quiz");
+  if (quizAt === -1) return "";
+  return path.slice(0, quizAt);
+}
+
 function audioUrl(exam, track) {
-  const dir = exam.audioDir.replace(/\/$/, "");
-  return `${dir}/${encodeURIComponent(track.file)}`;
+  const base = repoBase();
+  const dir = exam.audioDir.replace(/^\/+/, "").replace(/\/$/, "");
+  return `${base}/${dir}/${encodeURIComponent(track.file)}`;
 }
 
 function trackLabels(track) {

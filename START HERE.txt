@@ -1,0 +1,26 @@
+JAZZ LISTENING QUIZ — WINDOWS SETUP (for your friend)
+===================================================
+
+STEP 1 — Unblock the download (IMPORTANT)
+  • Right-click the ZIP file you downloaded
+  • Click Properties
+  • At the bottom, check "Unblock"
+  • Click OK
+  • THEN unzip/extract the folder
+
+STEP 2 — Start the quiz
+  • Open the unzipped folder
+  • Double-click:  start.bat
+  • Your browser should open to the quiz automatically
+  • Leave the black window open while you study
+  • Press Ctrl+C in that window when done
+
+If start.bat does not work:
+  • Make sure you did STEP 1 (Unblock) BEFORE unzipping
+  • Try: right-click start.bat → Run as administrator (one time)
+  • Or send your friend this link if you host it online (ask Joel)
+
+This app only runs on YOUR computer (127.0.0.1). It does not send data anywhere.
+It is blocked by Windows because it was downloaded from the internet, not because it is unsafe.
+
+Need help? Text Joel with a screenshot of the error message.
