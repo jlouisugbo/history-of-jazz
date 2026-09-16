@@ -14,11 +14,21 @@ First time on Mac without the binary: run `./build.sh` once (requires [Go](https
 
 ### Windows
 
-1. Download/unzip the folder (must include `jazz-quiz.exe`, `quiz/`, `exam1/`).
-2. Double-click **`start.bat`** (or run `jazz-quiz.exe`).
-3. Browser opens automatically. **Ctrl+C** to stop.
+1. **Before unzipping:** right-click the zip → **Properties** → check **Unblock** → OK.
+2. Unzip the folder (needs `quiz/`, `exam1/`, and `start.bat`).
+3. Double-click **`start.bat`**. Browser opens automatically. **Ctrl+C** to stop.
 
-First time on Windows without the exe: install [Go](https://go.dev/dl/), run `build.sh` from Git Bash or `go build -o jazz-quiz.exe .` in cmd.
+**Smart App Control blocked it?** Windows 11 often blocks unsigned `.exe` files from the internet — even safe local apps like this one. That is normal; the app is not malware.
+
+Pick one fix:
+
+| Fix | What to do |
+|-----|------------|
+| **Easiest** | Install [Python 3](https://www.python.org/downloads/) (check **Add python.exe to PATH**). Run **`start.bat`** again — it uses Python automatically. Or use **`start-python.bat`**. |
+| **One-time Windows setting** | Settings → Privacy & security → Windows Security → App & browser control → **Smart App Control settings** → set to **Evaluation mode** (or Off). Run `start.bat` again. |
+| **Build locally** | Install [Go](https://go.dev/dl/), run `go build -o jazz-quiz.exe .` in this folder, then `start.bat`. |
+
+There is no free way to make a custom `.exe` look “signed” to Smart App Control without buying a [code signing certificate](https://learn.microsoft.com/en-us/windows/win32/seccrypto/cryptography-tools) (~$200+/year). For a class zip, **Python launcher** or **Evaluation mode** is the practical path.
 
 Quiz URL: http://127.0.0.1:8765/quiz/
 
