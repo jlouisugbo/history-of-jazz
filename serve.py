@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Serve quiz/ and exam audio from the repo root (stdlib only)."""
 
+import threading
+import webbrowser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -97,5 +99,8 @@ class Server(ThreadingHTTPServer):
 
 
 if __name__ == "__main__":
-    print(f"Quiz: http://{HOST}:{PORT}/quiz/", flush=True)
+    url = f"http://{HOST}:{PORT}/quiz/"
+    print(f"Quiz: {url}", flush=True)
+    print("Press Ctrl+C to stop.", flush=True)
+    threading.Timer(0.4, lambda: webbrowser.open(url)).start()
     Server((HOST, PORT), Handler).serve_forever()
