@@ -1,61 +1,105 @@
-# History of Jazz listening quiz
+# History of Jazz — listening quiz
 
-Local quiz + study mode, or **host online** so classmates just open a link (no download, no Smart App Control issues).
+A static listening study app: **quiz mode** (60-second excerpts) and **study mode** (full tracks). No backend — just HTML, audio files, and a JSON catalog.
 
-## Host online (recommended for sharing)
+**Live site:** https://jlouisugbo.github.io/history-of-jazz/quiz/
 
-**Both GitHub Pages and Vercel are free** and easily handle 50+ classmates. Audio is static files; there is no server to scale.
-
-| | GitHub Pages | Vercel |
-|---|-------------|--------|
-| Cost | Free | Free |
-| Bandwidth | ~soft 100 GB/month | 100 GB/month (Hobby) |
-| Best if | Repo is already on GitHub | You want auto-deploy on every push |
-| Your URL | `https://jlouisugbo.github.io/history-of-jazz/quiz/` | `https://your-project.vercel.app/quiz/` |
-
-50 people listening to ~3 min tracks a few times each is well under either limit.
-
-### Option A — GitHub Pages (simplest)
-
-Repo: [github.com/jlouisugbo/history-of-jazz](https://github.com/jlouisugbo/history-of-jazz)
-
-1. Push this folder to `main` (including `exam1/` MP3s).
-2. On GitHub: **Settings → Pages**
-3. **Build and deployment → Source:** Deploy from a branch
-4. **Branch:** `main` → folder **`/ (root)`** → Save
-5. Wait ~1–2 minutes. Open:
-
-   **https://jlouisugbo.github.io/history-of-jazz/quiz/**
-
-Send that link to your friend. Nothing to install.
-
-### Option B — Vercel
-
-1. Push to GitHub (same repo).
-2. Go to [vercel.com](https://vercel.com) → **Add New Project** → import `history-of-jazz`.
-3. Leave defaults (static site) → **Deploy**.
-4. Open `https://<project>.vercel.app/quiz/` (root redirects to `/quiz/`).
+Share that link with anyone in the class. Works in any browser; nothing to install.
 
 ---
 
-## Run locally (optional)
+## Using the app
+
+### Quiz mode
+- 10 random excerpts per attempt, 15 answer choices
+- Match each excerpt by **song title** or **billed artist** (either counts)
+- Shared artists (e.g. Duke Ellington on multiple tracks) are valid for each matching excerpt
+- Excerpts start at a random point from 0:00 to one minute before the end
+- Keyboard: **A–O** answer · **space** play · **R** replay · **N** new excerpt · **← →** navigate
+
+### Study mode
+- Full tracks in shuffled order
+- Listen first, then **Show answer** (**S**)
+- **space** play/pause · **N** next · **← →** prev/next
+
+---
+
+## Deploying
+
+The site is a static folder. Push to `main` and a host serves `quiz/`, `exam1/`, and the MP3s as-is.
+
+| Host | Cost | Good for |
+|------|------|----------|
+| [GitHub Pages](https://pages.github.com/) | Free | Simplest — repo is already on GitHub |
+| [Vercel](https://vercel.com/) | Free | Auto-redeploy on every push |
+
+Both handle 50+ users easily (static audio + ~100 GB/month bandwidth on free tiers).
+
+### GitHub Pages
+
+1. Push `main` (include `exam1/` MP3s and `quiz/catalog.json`).
+2. Repo **Settings → Pages → Build and deployment**
+3. Source: **Deploy from a branch** → **main** → **`/ (root)`** → Save
+4. Site goes live at `https://<username>.github.io/<repo>/quiz/`
+
+This repo: **https://jlouisugbo.github.io/history-of-jazz/quiz/**
+
+`.nojekyll` at the repo root tells GitHub Pages not to run Jekyll. Root `index.html` redirects to `/quiz/`.
+
+### Vercel
+
+1. Push the same repo to GitHub.
+2. [vercel.com](https://vercel.com) → **Add New Project** → import the repo.
+3. Deploy with defaults. `vercel.json` redirects `/` → `/quiz/` and sets audio cache headers.
+
+URL: `https://<project>.vercel.app/quiz/`
+
+### After deploy
+
+Every push to `main` updates the live site (GitHub Pages within ~1–2 min; Vercel usually faster).
+
+---
+
+## Adding tracks or a new exam
+
+1. Add MP3s under `exam1/` (or a new folder like `exam2/`).
+2. Edit `quiz/catalog.json` — each track needs `file`, `title`, and `artist`:
+
+```json
+{
+  "id": "exam1-24",
+  "file": "24. Artist - Song.mp3",
+  "title": "Song Title",
+  "artist": "Billed Artist Name"
+}
+```
+
+3. For a new exam set, copy the `exam1` object in `catalog.json`, change `id`, `title`, and `audioDir` (e.g. `/exam2`), and fill in `tracks`.
+4. Push. No build step.
+
+Use the same `artist` string when one person appears on multiple tracks (e.g. `"Duke Ellington"`) so quiz scoring treats them as one label.
+
+---
+
+## Project layout
+
+```
+quiz/           App (index.html, app.js, styles.css, catalog.json)
+exam1/          Audio files for exam 1
+index.html      Redirects to /quiz/
+.nojekyll       GitHub Pages config
+vercel.json     Vercel config
+```
+
+---
+
+## Local development (optional)
+
+Only needed when editing the app offline:
 
 ```bash
 python3 serve.py
-# or
-./jazz-quiz
+# or: ./jazz-quiz   (after go build)
 ```
 
-Open http://127.0.0.1:8765/quiz/
-
-## Modes
-
-**Quiz** — 10 random 60-second excerpts, 15 choices. Match by **title or artist** (2 pts each).
-
-**Study** — full tracks in random order. **Show answer** when ready. Keys: space play, S reveal, N next.
-
-## Add exam 2
-
-1. Drop MP3s in `exam2/`.
-2. Copy the `exam1` block in `quiz/catalog.json`; set `id`, `title`, `audioDir` to `/exam2`.
-3. Add tracks with `file`, `title`, `artist`. Push — hosting updates automatically.
+Open http://127.0.0.1:8765/quiz/ — do not open `quiz/index.html` directly as a file; the browser blocks audio that way.
