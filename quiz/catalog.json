@@ -148,6 +148,97 @@
           "artist": "Count Basie"
         }
       ]
+    },
+    {
+      "id": "exam2",
+      "title": "Exam 2",
+      "audioDir": "/exam2",
+      "tracks": [
+        {
+          "id": "exam2-24",
+          "file": "24. Benny Goodman Trio – Body and Soul.mp3",
+          "title": "Body and Soul",
+          "artist": "Benny Goodman"
+        },
+        {
+          "id": "exam2-25",
+          "file": "25. Oh! Lady Be Good - Lester Young.mp3",
+          "title": "Oh! Lady Be Good",
+          "artist": "Lester Young"
+        },
+        {
+          "id": "exam2-26",
+          "file": "26. Billie Holiday - A Sailboat In The Moonlight.mp3",
+          "title": "A Sailboat in the Moonlight",
+          "artist": "Billie Holiday"
+        },
+        {
+          "id": "exam2-27",
+          "file": "27. Billie Holiday - He's Funny That Way.mp3",
+          "title": "He's Funny That Way",
+          "artist": "Billie Holiday"
+        },
+        {
+          "id": "exam2-28",
+          "file": "28. Jimmy Lunceford - Annie Laurie.mp3",
+          "title": "Annie Laurie",
+          "artist": "Jimmy Lunceford"
+        },
+        {
+          "id": "exam2-29",
+          "file": "29. Benny Carter - I'm Coming Virginia.mp3",
+          "title": "I'm Coming Virginia",
+          "artist": "Benny Carter"
+        },
+        {
+          "id": "exam2-30",
+          "file": "30. Count Basie And His Orchestra - Taxi War Dance.mp3",
+          "title": "Taxi War Dance",
+          "artist": "Count Basie"
+        },
+        {
+          "id": "exam2-31",
+          "file": "31. Valaida Snow - You're Driving Me Crazy.mp3",
+          "title": "You're Driving Me Crazy",
+          "artist": "Valaida Snow"
+        },
+        {
+          "id": "exam2-32",
+          "file": "32. Duke Ellington - Conga Brava.mp3",
+          "title": "Conga Brava",
+          "artist": "Duke Ellington"
+        },
+        {
+          "id": "exam2-33",
+          "file": "33. Artie Shaw - Star Dust.mp3",
+          "title": "Star Dust",
+          "artist": "Artie Shaw"
+        },
+        {
+          "id": "exam2-34",
+          "file": "34. Benny Goodman Septet - I Found A New Baby.mp3",
+          "title": "I Found a New Baby",
+          "artist": "Benny Goodman"
+        },
+        {
+          "id": "exam2-35",
+          "file": "35. Roy Eldridge -Rockin' Chair.mp3",
+          "title": "Rockin' Chair",
+          "artist": "Roy Eldridge"
+        },
+        {
+          "id": "exam2-36",
+          "file": "36. Ella Fitzgerald - You'd Be So Nice to Come Home To.mp3",
+          "title": "You'd Be So Nice to Come Home To",
+          "artist": "Ella Fitzgerald"
+        },
+        {
+          "id": "exam2-37",
+          "file": "37. Sarah Vaughan - My Funny Valentine.mp3",
+          "title": "My Funny Valentine",
+          "artist": "Sarah Vaughan"
+        }
+      ]
     }
   ]
 }

@@ -29,8 +29,10 @@ const studyProgressLabel = document.getElementById("study-progress-label");
 const studyPlayBtn = document.getElementById("study-play-btn");
 const studyRestartBtn = document.getElementById("study-restart-btn");
 const studyNextBtn = document.getElementById("study-next-btn");
+const studyMeter = document.getElementById("study-meter");
 const studyMeterFill = document.getElementById("study-meter-fill");
 const studyTimeLabel = document.getElementById("study-time-label");
+const studySkipMarks = document.getElementById("study-skip-marks");
 const studyPrompt = document.getElementById("study-prompt");
 const studyRevealBtn = document.getElementById("study-reveal-btn");
 const studyCard = document.getElementById("study-card");
@@ -53,6 +55,10 @@ let studyOrder = [];
 let studyPosition = 0;
 let studyRevealed = false;
 let studyPendingPlay = false;
+let studyPendingSeek = null;
+
+const SEEK_TOLERANCE_SEC = 0.08;
+const SEEK_FALLBACK_MS = 400;
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -188,12 +194,77 @@ function updateStudyReveal() {
   }
 }
 
+function studySkipStep() {
+  return catalog?.excerptSeconds || 60;
+}
+
+function seekToTime(seconds, onSeeked) {
+  const duration = player.duration;
+  if (!Number.isFinite(duration) || duration <= 0) {
+    onSeeked?.(false);
+    return;
+  }
+  const target = Math.min(Math.max(0, seconds), Math.max(0, duration - 0.05));
+  if (Math.abs(player.currentTime - target) < SEEK_TOLERANCE_SEC) {
+    onSeeked?.(true);
+    return;
+  }
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    player.removeEventListener("seeked", finish);
+    onSeeked?.(true);
+  };
+  player.addEventListener("seeked", finish);
+  player.currentTime = target;
+  window.setTimeout(() => {
+    if (!finished) finish();
+  }, SEEK_FALLBACK_MS);
+}
+
+function seekStudy(seconds, { play = false } = {}) {
+  const duration = player.duration;
+  if (!Number.isFinite(duration) || duration <= 0) {
+    studyPendingSeek = { seconds, play };
+    return;
+  }
+  const shouldPlay = play || !player.paused;
+  if (shouldPlay) player.pause();
+  seekToTime(seconds, () => {
+    updateStudyProgress();
+    if (shouldPlay) studyBeginPlayback();
+  });
+}
+
+function renderStudySkipMarks() {
+  studySkipMarks.replaceChildren();
+  const duration = player.duration;
+  if (!Number.isFinite(duration) || duration <= 0) return;
+  const step = studySkipStep();
+  const count = Math.floor(duration / step) + 1;
+  for (let index = 0; index < count; index += 1) {
+    const start = index * step;
+    if (start >= duration) break;
+    const mark = el("button", "ghost", String(index));
+    mark.type = "button";
+    mark.dataset.skipIndex = String(index);
+    mark.setAttribute("aria-label", `Skip to ${formatTime(start)}`);
+    mark.title = formatTime(start);
+    studySkipMarks.append(mark);
+  }
+}
+
 function updateStudyProgress() {
   const duration = player.duration;
   if (!Number.isFinite(duration) || duration <= 0) return;
   const ratio = Math.min(1, Math.max(0, player.currentTime / duration));
   studyMeterFill.style.width = `${ratio * 100}%`;
   studyTimeLabel.textContent = `${formatTime(player.currentTime)} / ${formatTime(duration)}`;
+  const skipIndex = Math.floor(player.currentTime / studySkipStep());
+  for (const mark of studySkipMarks.querySelectorAll("button")) {
+    mark.classList.toggle("current", Number(mark.dataset.skipIndex) === skipIndex);
+  }
 }
 
 function studyBeginPlayback() {
@@ -212,7 +283,9 @@ function loadStudyTrack(autoPlay) {
   studyProgressLabel.textContent = `Track ${studyPosition + 1} of ${studyOrder.length}`;
   studyPlayBtn.textContent = "Play";
   studyMeterFill.style.width = "0%";
+  studySkipMarks.replaceChildren();
   studyTimeLabel.textContent = "Loading track…";
+  studyPendingSeek = null;
   player.pause();
   player.src = audioUrl(activeExam, track);
   player.load();
@@ -336,25 +409,8 @@ function beginPlayback() {
 }
 
 function seekThenPlay(start) {
-  let finished = false;
-  const finish = () => {
-    if (finished) return;
-    finished = true;
-    player.removeEventListener("seeked", finish);
-    beginPlayback();
-  };
   player.pause();
-  if (Math.abs(player.currentTime - start) < 0.08) {
-    finish();
-    return;
-  }
-  player.addEventListener("seeked", finish);
-  player.currentTime = start;
-  setTimeout(() => {
-    if (finished) return;
-    player.currentTime = start;
-    finish();
-  }, 400);
+  seekToTime(start, () => beginPlayback());
 }
 
 function playExcerpt(restart) {
@@ -431,16 +487,18 @@ function gradeQuiz() {
   show("result");
 }
 
+function examPoolLine(exam) {
+  const shared = sharedArtists(exam.tracks)
+    .map((item) => item.artist)
+    .join(", ");
+  const sharedNote = shared ? ` Shared artists: ${shared}.` : "";
+  return `${exam.title}: ${exam.tracks.length} tracks.${sharedNote}`;
+}
+
 function renderStart() {
   player.pause();
   activeMode = null;
-  const exam = catalog.exams[0];
-  const labels = uniqueLabels(exam.tracks);
-  const shared = sharedArtists(exam.tracks);
-  const sharedNote = shared
-    .map((item) => `${item.artist} (${item.titles.join(", ")})`)
-    .join("; ");
-  poolNote.textContent = `${exam.tracks.length} tracks · ${labels.length} unique title/artist labels. Quiz samples ${catalog.questionCount} excerpts and ${catalog.choiceCount} choices. Study mode plays full tracks in random order. Shared artists: ${sharedNote}.`;
+  poolNote.textContent = `${catalog.exams.map(examPoolLine).join(" ")} Each quiz samples ${catalog.questionCount} excerpts and ${catalog.choiceCount} choices. Study mode plays full tracks in random order.`;
   examButtons.replaceChildren();
   studyButtons.replaceChildren();
   for (const item of catalog.exams) {
@@ -462,12 +520,13 @@ function renderStart() {
 
 player.addEventListener("loadedmetadata", () => {
   if (activeMode === "study") {
-    player.currentTime = 0;
-    studyTimeLabel.textContent = `0:00 / ${formatTime(player.duration)}`;
-    if (studyPendingPlay) {
-      studyPendingPlay = false;
-      studyBeginPlayback();
-    }
+    renderStudySkipMarks();
+    const pending = studyPendingSeek;
+    studyPendingSeek = null;
+    const target = pending?.seconds ?? 0;
+    const play = pending?.play ?? studyPendingPlay;
+    studyPendingPlay = false;
+    seekStudy(target, { play });
     return;
   }
   if (activeMode !== "quiz") return;
@@ -576,15 +635,31 @@ studyPlayBtn.addEventListener("click", () => {
     return;
   }
   if (player.currentTime >= player.duration - 0.05) {
-    player.currentTime = 0;
+    seekStudy(0, { play: true });
+    return;
   }
   studyBeginPlayback();
 });
 
 studyRestartBtn.addEventListener("click", () => {
-  player.currentTime = 0;
-  studyMeterFill.style.width = "0%";
-  studyBeginPlayback();
+  seekStudy(0, { play: true });
+});
+
+studyMeter.addEventListener("click", (event) => {
+  const duration = player.duration;
+  if (!Number.isFinite(duration) || duration <= 0) return;
+  const rect = studyMeter.getBoundingClientRect();
+  if (rect.width <= 0) return;
+  const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+  seekStudy(ratio * duration, { play: true });
+});
+
+studySkipMarks.addEventListener("click", (event) => {
+  const mark = event.target instanceof Element ? event.target.closest("button") : null;
+  if (!(mark instanceof HTMLButtonElement) || !studySkipMarks.contains(mark)) return;
+  const index = Number(mark.dataset.skipIndex);
+  if (!Number.isFinite(index)) return;
+  seekStudy(index * studySkipStep(), { play: true });
 });
 
 studyNextBtn.addEventListener("click", () => nextStudyTrack());
@@ -603,6 +678,10 @@ document.addEventListener("keydown", (event) => {
       if (event.target instanceof HTMLButtonElement || event.target instanceof HTMLInputElement) return;
       event.preventDefault();
       studyPlayBtn.click();
+    } else if (key.length === 1 && key >= "0" && key <= "9") {
+      if (event.target instanceof HTMLInputElement) return;
+      event.preventDefault();
+      seekStudy(Number(key) * studySkipStep(), { play: true });
     } else if (key === "S") {
       studyRevealBtn.click();
     } else if (key === "N") {

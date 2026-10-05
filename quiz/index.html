@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>History of Jazz — listening quiz</title>
-  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
   <main class="page">
@@ -25,7 +25,7 @@
       <div id="exam-buttons" class="actions"></div>
       <div id="study-buttons" class="actions"></div>
       <p class="keys">Quiz: A–O answer · space play · R replay · N new excerpt · ← → move</p>
-      <p class="keys">Study: space play · S show/hide · N next track · ← → prev/next</p>
+      <p class="keys">Study: space play · S show/hide · N next track · 0–9 jump to minute · click bar to seek · ← → prev/next</p>
     </section>
 
     <audio id="player" preload="auto" class="visually-hidden"></audio>
@@ -71,10 +71,12 @@
           <button type="button" id="study-restart-btn" class="ghost">Restart</button>
           <button type="button" id="study-next-btn" class="ghost">Next track</button>
         </div>
-        <div class="meter" aria-hidden="true">
+        <div id="study-meter" class="meter seek">
           <div id="study-meter-fill" class="meter-fill"></div>
         </div>
         <p id="study-time-label" class="time">Ready</p>
+        <p class="skip-caption">Jump to minute</p>
+        <div id="study-skip-marks" class="skip-marks"></div>
       </div>
 
       <div id="study-prompt" class="study-prompt">
@@ -107,6 +109,6 @@
       </div>
     </section>
   </main>
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=9"></script>
 </body>
 </html>
