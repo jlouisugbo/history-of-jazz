@@ -239,6 +239,121 @@
           "artist": "Sarah Vaughan"
         }
       ]
+    },
+    {
+      "id": "exam3",
+      "title": "Exam 3",
+      "audioDir": "/exam3",
+      "tracks": [
+        {
+          "id": "exam3-38",
+          "file": "38. Charlie Christian – Swing to Bop b.mp3",
+          "title": "Swing to Bop",
+          "artist": "Charlie Christian"
+        },
+        {
+          "id": "exam3-39",
+          "file": "39. Charlie Parker's Re-Boppers - Ko Ko.mp3",
+          "title": "Ko Ko",
+          "artist": "Charlie Parker's Re-Boppers"
+        },
+        {
+          "id": "exam3-40",
+          "file": "40. Dexter Gordon - Long, Tall Dexter.mp3",
+          "title": "Long, Tall Dexter",
+          "artist": "Dexter Gordon"
+        },
+        {
+          "id": "exam3-41",
+          "file": "41. Charlie Parker - Embraceable You.mp3",
+          "title": "Embraceable You",
+          "artist": "Charlie Parker"
+        },
+        {
+          "id": "exam3-42",
+          "file": "42. Thelonious Monk - Thelonious.mp3",
+          "title": "Thelonious",
+          "artist": "Thelonious Monk"
+        },
+        {
+          "id": "exam3-43",
+          "file": "43. Bud Powell - Tempus Fuge-It.mp3",
+          "title": "Tempus Fuge-It",
+          "artist": "Bud Powell"
+        },
+        {
+          "id": "exam3-44",
+          "file": "44. Miles Davis - Venus de Milo.mp3",
+          "title": "Venus de Milo",
+          "artist": "Miles Davis"
+        },
+        {
+          "id": "exam3-45",
+          "file": "45. The Modern Jazz Quartet - Vendome.mp3",
+          "title": "Vendome",
+          "artist": "The Modern Jazz Quartet"
+        },
+        {
+          "id": "exam3-46",
+          "file": "46. Charlie Parker - Now's the Time.mp3",
+          "title": "Now's the Time",
+          "artist": "Charlie Parker"
+        },
+        {
+          "id": "exam3-47",
+          "file": "47. Clifford Brown - A Night in Tunisia.mp3",
+          "title": "A Night in Tunisia",
+          "artist": "Clifford Brown"
+        },
+        {
+          "id": "exam3-48",
+          "file": "48. George Russell - Concerto for Billy the Kid.mp3",
+          "title": "Concerto for Billy the Kid",
+          "artist": "George Russell"
+        },
+        {
+          "id": "exam3-49",
+          "file": "49. Sonny Rollins - I'm and Old Cowhand (from the Rio Grande).mp3",
+          "title": "I'm an Old Cowhand (from the Rio Grande)",
+          "artist": "Sonny Rollins"
+        },
+        {
+          "id": "exam3-50",
+          "file": "50. Gil Evans - King Porter Stomp.mp3",
+          "title": "King Porter Stomp",
+          "artist": "Gil Evans"
+        },
+        {
+          "id": "exam3-51",
+          "file": "51. Charles Mingus - Boogie Stop Shuffle.mp3",
+          "title": "Boogie Stop Shuffle",
+          "artist": "Charles Mingus"
+        },
+        {
+          "id": "exam3-52",
+          "file": "52. Miles Davis Sextet - So What.mp3",
+          "title": "So What",
+          "artist": "Miles Davis Sextet"
+        },
+        {
+          "id": "exam3-53",
+          "file": "53. Bill Evans Trio - Witchcraft.mp3",
+          "title": "Witchcraft",
+          "artist": "Bill Evans Trio"
+        },
+        {
+          "id": "exam3-54",
+          "file": "54. Thelonious Monk - Rhythm-a-ning.mp3",
+          "title": "Rhythm-a-ning",
+          "artist": "Thelonious Monk"
+        },
+        {
+          "id": "exam3-55",
+          "file": "55. Horace Silver - Song for My Father.mp3",
+          "title": "Song for My Father",
+          "artist": "Horace Silver"
+        }
+      ]
     }
   ]
 }
