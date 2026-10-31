@@ -252,12 +252,6 @@
           "artist": "Charlie Christian"
         },
         {
-          "id": "exam3-39",
-          "file": "39. Charlie Parker's Re-Boppers - Ko Ko.mp3",
-          "title": "Ko Ko",
-          "artist": "Charlie Parker's Re-Boppers"
-        },
-        {
           "id": "exam3-40",
           "file": "40. Dexter Gordon - Long, Tall Dexter.mp3",
           "title": "Long, Tall Dexter",
@@ -278,7 +272,7 @@
         {
           "id": "exam3-43",
           "file": "43. Bud Powell - Tempus Fuge-It.mp3",
-          "title": "Tempus Fuge-It",
+          "title": "Tempus Fugue-It",
           "artist": "Bud Powell"
         },
         {
@@ -314,7 +308,7 @@
         {
           "id": "exam3-49",
           "file": "49. Sonny Rollins - I'm and Old Cowhand (from the Rio Grande).mp3",
-          "title": "I'm an Old Cowhand (from the Rio Grande)",
+          "title": "I'm and Old Cowhand (from the Rio Grande)",
           "artist": "Sonny Rollins"
         },
         {
@@ -328,12 +322,6 @@
           "file": "51. Charles Mingus - Boogie Stop Shuffle.mp3",
           "title": "Boogie Stop Shuffle",
           "artist": "Charles Mingus"
-        },
-        {
-          "id": "exam3-52",
-          "file": "52. Miles Davis Sextet - So What.mp3",
-          "title": "So What",
-          "artist": "Miles Davis Sextet"
         },
         {
           "id": "exam3-53",
