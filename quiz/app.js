@@ -95,15 +95,22 @@ function audioUrl(exam, track) {
   return `${base}/${dir}/${encodeURIComponent(track.file)}`;
 }
 
-function trackLabels(track) {
+function usesListedAnswers(exam) {
+  return exam?.answerMode === "listed";
+}
+
+function trackLabels(track, exam) {
+  if (usesListedAnswers(exam) && Array.isArray(track.answers) && track.answers.length > 0) {
+    return track.answers.slice();
+  }
   return [track.title, track.artist];
 }
 
-function uniqueLabels(tracks) {
+function uniqueLabels(tracks, exam) {
   const labels = [];
   const seen = new Set();
   for (const track of tracks) {
-    for (const label of trackLabels(track)) {
+    for (const label of trackLabels(track, exam)) {
       if (seen.has(label)) continue;
       seen.add(label);
       labels.push(label);
@@ -124,20 +131,26 @@ function sharedArtists(tracks) {
     .map(([artist, titles]) => ({ artist, titles }));
 }
 
-function isCorrectLabel(track, label) {
-  return track.title === label || track.artist === label;
+function isCorrectLabel(track, label, exam) {
+  return trackLabels(track, exam).includes(label);
+}
+
+function validAnswerText(track, exam) {
+  const labels = trackLabels(track, exam);
+  if (labels.length === 1) return labels[0];
+  return labels.join(" or ");
 }
 
 function choiceByLetter(letter) {
   return roundChoices.find((choice) => choice.letter === letter);
 }
 
-function buildChoices(selectedTracks, allTracks, count) {
-  const universe = uniqueLabels(allTracks);
+function buildChoices(selectedTracks, allTracks, count, exam) {
+  const universe = uniqueLabels(allTracks, exam);
   const chosen = new Set();
   for (const track of shuffle(selectedTracks)) {
-    if (trackLabels(track).some((label) => chosen.has(label))) continue;
-    const options = trackLabels(track);
+    if (trackLabels(track, exam).some((label) => chosen.has(label))) continue;
+    const options = trackLabels(track, exam);
     chosen.add(options[Math.floor(Math.random() * options.length)]);
   }
   for (const label of shuffle(universe.filter((label) => !chosen.has(label)))) {
@@ -189,8 +202,21 @@ function updateStudyReveal() {
   studyRevealBtn.classList.toggle("ghost", studyRevealed);
   studyRevealBtn.classList.toggle("play", !studyRevealed);
   if (studyRevealed) {
-    studyTitle.textContent = track.title;
-    studyArtist.textContent = track.artist;
+    const listed = usesListedAnswers(activeExam) && Array.isArray(track.answers) && track.answers.length > 0;
+    const cardLabels = studyCard.querySelectorAll(".study-label");
+    if (listed) {
+      cardLabels[0].textContent = "Answer";
+      cardLabels[1].classList.add("hidden");
+      studyTitle.textContent = track.answers.join(" · ");
+      studyArtist.textContent = "";
+      studyArtist.classList.add("hidden");
+    } else {
+      cardLabels[0].textContent = "Title";
+      cardLabels[1].classList.remove("hidden");
+      studyTitle.textContent = track.title;
+      studyArtist.textContent = track.artist;
+      studyArtist.classList.remove("hidden");
+    }
   }
 }
 
@@ -446,7 +472,7 @@ function startQuiz(exam) {
     selected: null,
     excerpt: null,
   }));
-  roundChoices = buildChoices(tracks, exam.tracks, choiceCount);
+  roundChoices = buildChoices(tracks, exam.tracks, choiceCount, exam);
   currentIndex = 0;
   examTitle.textContent = exam.title;
   renderChoices();
@@ -460,22 +486,16 @@ function gradeQuiz() {
   let correctCount = 0;
   questions.forEach((question, index) => {
     const picked = question.selected ? choiceByLetter(question.selected) : null;
-    const correct = Boolean(picked && isCorrectLabel(question.track, picked.label));
+    const correct = Boolean(picked && isCorrectLabel(question.track, picked.label, activeExam));
     if (correct) correctCount += 1;
     const item = el("li");
     const mark = el("p", correct ? "mark" : "mark miss", `${index + 1}. ${correct ? "Correct" : "Incorrect"}`);
     const yours = el("p", null, `Your answer: ${picked ? `${picked.letter}. ${picked.label}` : "No answer"}`);
-    const right = el(
-      "p",
-      null,
-      `Valid: ${question.track.title} or ${question.track.artist}`,
-    );
+    const right = el("p", null, `Valid: ${validAnswerText(question.track, activeExam)}`);
     const how = el(
       "p",
       "muted",
-      correct
-        ? `Counted as ${picked.label === question.track.artist ? "artist" : "title"}`
-        : "Title or billed artist both count",
+      usesListedAnswers(activeExam) ? "Only exam-sheet answers count for this quiz." : "Title or billed artist both count",
     );
     item.append(mark, yours, right, how);
     reviewList.append(item);
@@ -488,6 +508,10 @@ function gradeQuiz() {
 }
 
 function examPoolLine(exam) {
+  if (usesListedAnswers(exam)) {
+    const labelCount = uniqueLabels(exam.tracks, exam).length;
+    return `${exam.title}: ${exam.tracks.length} tracks, ${labelCount} sheet answers only.`;
+  }
   const shared = sharedArtists(exam.tracks)
     .map((item) => item.artist)
     .join(", ");
