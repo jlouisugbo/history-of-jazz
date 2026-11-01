@@ -113,13 +113,25 @@ Use the same `artist` string when one person appears on multiple tracks on **tit
 ## Project layout
 
 ```
-quiz/           App (index.html, app.js, styles.css, catalog.json)
+quiz/           App (index.html, app.ts, app.js, styles.css, catalog.json)
 exam1/          Audio files for exam 1
 exam2/          Audio files for exam 2
 exam3/          Audio files for exam 3
+package.json    TypeScript build (`npm run build` → compiles quiz/app.ts to quiz/app.js)
 index.html      Redirects to /quiz/
 .nojekyll       GitHub Pages config
 vercel.json     Vercel config
+```
+
+---
+
+## TypeScript
+
+Quiz logic lives in `quiz/app.ts` (types in `quiz/types.ts`). GitHub Pages serves the compiled `quiz/app.js`.
+
+```bash
+npm install
+npm run build    # run before push if you changed app.ts
 ```
 
 ---

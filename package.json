@@ -1,0 +1,10 @@
+{
+  "name": "history-of-jazz-quiz",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json && rm -f quiz/types.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
